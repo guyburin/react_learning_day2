@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
+import React ,{Component} from 'react';
 import './App.css';
+import Containers from './contrainers/containers';
+import TextInput from './components/TextInput';
+import Button from './components/Button';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+
+  state ={
+    score: 0,
+    grade: ''
+  }
+
+  inputChangeHandler = (event) => {
+    let value = event.target.value;
+    this.setState({
+      score: value
+    });
+   }
+
+  calGrade = () =>{
+    // alert("heeeeeeeeeeeeeeeeea");
+    let score = this.state.score;
+    let grade ='';
+    if(score>=80){
+      grade = 'A'
+    }else{
+      grade = 'F'
+    }
+
+    this.setState({
+      grade : grade
+    })
+  }
+
+  render () {
+    return (
+      <Containers>  
+        <div className="input-group mb-3">
+        <TextInput type="number" value={this.state.score} classes="form-control" placeholder="input your score"  change={this.inputChangeHandler}/>
+          <div className="input-group-append">
+            <Button classes="btn btn-outline-secondary" click={this.calGrade}>Click</Button>           
+          </div>
+        </div>
+        <h1>Grade : {this.state.grade}</h1>
+      </Containers>
+    )
+  }
 }
 
 export default App;
